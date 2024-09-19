@@ -55,7 +55,9 @@ def get_domain_suggestions() -> dict:
         model=MODEL,
         messages=[
             {"role": "system",
-             "content": "You are a helpful domain name generation expert. Please suggest a single list of 10 domain names for an edtech startup and return them in one call."}
+             "content": "You are a helpful domain name generation expert. Use the supported tools to assist the user"},
+            {"role": "user",
+             "content": "Please suggest a single list of 10 domain names for an edtech startup"}
         ],
         tools=tools,
         tool_choice="auto"
