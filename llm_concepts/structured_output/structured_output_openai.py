@@ -17,6 +17,7 @@ MODEL = "gpt-4o-2024-08-06"
 
 client = OpenAI(api_key=api_key)
 
+
 # ----------------------------------------------------------------------
 # Example 1 : Basic example that extracts the event info from user input
 # ----------------------------------------------------------------------
@@ -38,7 +39,9 @@ def extract_event_information() -> CalendarEvent:
     )
     return completion.choices[0].message.parsed
 
+
 print(extract_event_information())
+
 
 # ----------------------------------------------------------------------
 # Example 2 : Enums example : Sentiment Analysis
@@ -48,6 +51,7 @@ class SentimentCategory(str, Enum):
     POSITIVE = "positive",
     NEGATIVE = "negative"
 
+
 class Reply(BaseModel):
     content: str = Field(description="Your reply that we send to the customer.")
     category: SentimentCategory
@@ -55,19 +59,21 @@ class Reply(BaseModel):
         description="Confidence in the category prediction."
     )
 
+
 def do_sentiment_analysis() -> Reply:
     completion = client.beta.chat.completions.parse(
         model=MODEL,
         messages=[
-            {"role": "system", "content": "You will be given a customer query and you have to categorise in a positive or negative sentiment"},
+            {"role": "system",
+             "content": "You will be given a customer query and you have to categorise in a positive or negative sentiment"},
             {"role": "user", "content": "Your products are amazing"}
         ],
         response_format=Reply
     )
     return completion.choices[0].message.parsed
 
-print(do_sentiment_analysis())
 
+print(do_sentiment_analysis())
 
 # JSON is one of the most widely used formats in the world for applications
 # to exchange data.
@@ -75,4 +81,4 @@ print(do_sentiment_analysis())
 # responses that adhere to your supplied JSON Schema, so you don't need to worry
 # about the model omitting a required key, or hallucinating an invalid enum value
 
-# Tested code on openai 1.40.0 and python 3.12.4
+# Tested code on openai 1.46.0 and python 3.12.4
